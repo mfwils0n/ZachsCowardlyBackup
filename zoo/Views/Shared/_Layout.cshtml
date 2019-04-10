@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Team4Zoo", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    
+                    @if (Session["Employee_ID"] != null)
+                    {
+                        if (Session["RoleName"].ToString().Equals("Caregiver"))
+                        {
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("My Animals", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Exhibits and Attractions", "Index", "Home")</li>
+                            <li>@Html.ActionLink("My Schedule", "Index", "Home")</li>
+
+                        }
+                        if (Session["RoleName"].ToString().Equals("SalesAssociate"))
+                        {
+                            <li>@Html.ActionLink("Sales", "Sales", "SalesAssociate")</li>
+                            <li>@Html.ActionLink("Inventory", "Inventory", "SalesAssociate")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "SalesAssociate")</li>
+                            <li>@Html.ActionLink("My Schedule", "Index", "SalesAssociate")</li>
+                        }
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["Employee_ID"] == null)
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+
+                    }
+                    @if (Session["Employee_ID"] != null)
+                    {
+                        <li>@Html.ActionLink("Hi " + Session["Name"].ToString().ToUpper() + "!", "Index", "Profile")</li>
+                        <li><a href="@Url.Action("LogOut","Login")">Log Out</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
